@@ -1,11 +1,8 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc,html
 import plotly.graph_objs as go
-import plotly.express as px
 import pickle
 import json
-from sklearn import metrics
 from dash.dependencies import Input, Output, State
 
 ########### Define your variables ######
@@ -13,7 +10,7 @@ myheading1='Predicting Mortgage Loan Approval'
 image1='assets/rocauc.html'
 tabtitle = 'Loan Prediction'
 sourceurl = 'https://datahack.analyticsvidhya.com/contest/practice-problem-loan-prediction-iii/'
-githublink = 'https://github.com/austinlasseter/simple-ml-apps'
+githublink = 'https://github.com/plotly-dash-apps/503-log-reg-loans-simple'
 
 ########### open the json file ######
 with open('assets/rocauc.json', 'r') as f:
