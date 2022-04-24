@@ -10,7 +10,7 @@ myheading1='Predicting Mortgage Loan Approval'
 image1='assets/rocauc.html'
 tabtitle = 'Loan Prediction'
 sourceurl = 'https://datahack.analyticsvidhya.com/contest/practice-problem-loan-prediction-iii/'
-githublink = 'https://github.com/plotly-dash-apps/503-log-reg-loans-simple'
+githublink = 'https://github.com/wendi-cui/503-log-reg-loans-simple'
 
 ########### open the json file ######
 with open('assets/rocauc.json', 'r') as f:
@@ -47,6 +47,8 @@ app.layout = html.Div(children=[
                 dcc.Input(id='ApplicantIncome', value=5000, type='number', min=0, max=100000, step=500),
                 html.Div('Probability Threshold for Loan Approval'),
                 dcc.Input(id='Threshold', value=50, type='number', min=0, max=100, step=1),
+                html.Div('Number of Dependents, if you have more than three, choose 3'),
+                dcc.Input(id='depend', value=0, type='number', min=0, max=3, step=1),
 
             ], className='three columns'),
             html.Div([
@@ -82,11 +84,12 @@ app.layout = html.Div(children=[
      Input(component_id='LoanAmount', component_property='value'),
      Input(component_id='Loan_Amount_Term', component_property='value'),
      Input(component_id='ApplicantIncome', component_property='value'),
+     Input(component_id='depend', component_property='value'),
      Input(component_id='Threshold', component_property='value')
     ])
-def prediction_function(Credit_History, LoanAmount, Loan_Amount_Term, ApplicantIncome, Threshold):
+def prediction_function(Credit_History, LoanAmount, Loan_Amount_Term, ApplicantIncome, depend, Threshold):
     try:
-        data = [[Credit_History, LoanAmount, Loan_Amount_Term, ApplicantIncome]]
+        data = [[Credit_History, LoanAmount, Loan_Amount_Term, ApplicantIncome, depend]]
         rawprob=100*unpickled_model.predict_proba(data)[0][1]
         func = lambda y: 'Approved' if int(rawprob)>Threshold else 'Denied'
         formatted_y = func(rawprob)
